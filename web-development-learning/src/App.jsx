@@ -6,6 +6,8 @@ import About from "./pages/About.jsx";
 import Errors from "./pages/Errors.jsx";
 import FixGuides from "./pages/FixGuides.jsx";
 import Contact from "./pages/Contact.jsx";
+import Learn from "./pages/Learn.jsx";
+import CodeHelper from "./pages/CodeHelper.jsx";
 
 export default function App() {
   return (
@@ -17,6 +19,8 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/errors" element={<Errors />} />
           <Route path="/fix-guides" element={<FixGuides />} />
+          <Route path="/learn" element={<Learn />} />
+          <Route path="/code-helper" element={<CodeHelper />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

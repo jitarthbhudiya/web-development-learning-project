@@ -6,8 +6,9 @@ const links = [
   ["/about", "About"],
   ["/errors", "Types of Errors"],
   ["/fix-guides", "How to Fix Errors"],
+  ["/learn", "Learn & Explore"],
+  ["/code-helper", "Code Helper"],
   ["/contact", "Contact"],
-  
 ];
 
 export default function Navbar() {

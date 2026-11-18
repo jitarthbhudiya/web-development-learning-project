@@ -5,5 +5,6 @@ export default function ErrorCard({ item }) {
     <p>{item.description}</p>
     <div className="mini-detail"><strong>Common cause</strong><span>{item.cause}</span></div>
     <pre className="code-sample"><code>{item.example}</code></pre>
+    <div className="mini-detail"><strong>What to try</strong><span>{item.fix}</span></div>
   </article>;
 }
