@@ -31,6 +31,6 @@ npm.cmd run preview
 ## Notes
 - `node_modules` is created on your computer by `npm.cmd install`; it is intentionally not included in the ZIP.
 - Contact form submissions are stored in the current browser's localStorage. There is no backend or email delivery in this first frontend version.
-- The Code Helper matches pasted text against a curated local guide library in the browser. It is not a generative AI service and does not send or save submitted code. A real AI integration would need a secure backend; do not put a private API key in frontend code.
+- The Code Helper matches pasted text against a curated local guide library in the browser. It is not a generative AI service and does not send or save submitted code. Its optional Google, Bing, DuckDuckGo, Stack Overflow, GitHub, and MDN links open external search results only when clicked; the submitted text is then sent to that provider. A real AI integration would need a secure backend; do not put a private API key in frontend code.
 - The Learn page includes short notes, examples, and links to official documentation for HTML, CSS, JavaScript, React, and browser/project tools.
 - Replace the sample contact email/phone in `src/pages/Contact.jsx` with your actual contact details.
