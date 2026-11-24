@@ -132,10 +132,7 @@ export default function Learn() {
         </div>
       </article>}
 
-      <div className="webdev-learning-callout">
-        <div><span className="eyebrow">KEEP EXPLORING</span><h2>More courses for the modern web</h2><p>These original learning paths link to official references, including the web.dev Learn collection.</p></div>
-        <a className="btn-primary-custom" href="https://web.dev/learn" target="_blank" rel="noopener noreferrer">Explore web.dev Learn <span aria-hidden="true">↗</span></a>
-      </div>
+      
     </div></section>
   </div>;
 }
