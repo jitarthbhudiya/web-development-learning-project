@@ -24,8 +24,7 @@ const webSearches = [
   { label: "DuckDuckGo", url: query => `https://duckduckgo.com/?q=${encodeURIComponent(query)}` },
   { label: "Stack Overflow", url: query => `https://stackoverflow.com/search?q=${encodeURIComponent(query)}` },
   { label: "GitHub", url: query => `https://github.com/search?q=${encodeURIComponent(query)}&type=code` },
-  { label: "MDN", url: query => `https://developer.mozilla.org/en-US/search?q=${encodeURIComponent(query)}` },
-  { label: "ChatGPT", url: query => `https://chatgpt.com/search?q=${encodeURIComponent(query)}&type=code` }
+  { label: "MDN", url: query => `https://developer.mozilla.org/en-US/search?q=${encodeURIComponent(query)}` }
 ];
 
 function findSuggestions(input, language) {
@@ -61,13 +60,12 @@ export default function CodeHelper() {
   const [language, setLanguage] = useState("Auto-detect");
   const [messages, setMessages] = useState([]);
   const [validationMessage, setValidationMessage] = useState("");
-  const [aiEnabled, setAiEnabled] = useState(false);
   const liveSuggestions = useMemo(
     () => input.trim().length >= 4 ? findSuggestions(input, language).slice(0, 3) : [],
     [input, language]
   );
 
-  async function ask(question) {
+  function ask(question) {
     const text = question.trim();
     if (!text) {
       setValidationMessage("Paste an error, a code snippet, or a few search words first.");
@@ -75,39 +73,15 @@ export default function CodeHelper() {
     }
 
     const suggestions = findSuggestions(text, language);
-    const useAi = aiEnabled;
     const id = `${Date.now()}-${Math.random()}`;
     setMessages(current => [...current, {
       id,
       question: text,
       answer: buildAnswer(suggestions),
-      suggestions,
-      sources: [],
-      isLoading: useAi,
-      usedAi: useAi,
-      aiError: ""
+      suggestions
     }]);
     setInput("");
     setValidationMessage("");
-
-    if (useAi) {
-      try {
-        const response = await fetch("/api/solve", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ query: text, language })
-        });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "The AI request failed.");
-        setMessages(current => current.map(message => message.id === id
-          ? { ...message, answer: data.answer, sources: data.sources ?? [], isLoading: false }
-          : message));
-      } catch (error) {
-        setMessages(current => current.map(message => message.id === id
-          ? { ...message, isLoading: false, aiError: error.message || "Could not reach the AI assistant." }
-          : message));
-      }
-    }
   }
 
   function handleSubmit(event) {
@@ -122,9 +96,9 @@ export default function CodeHelper() {
       <p>Paste an error or code snippet to get a quick explanation, then search the web and coding references for more solutions.</p>
     </div></section>
     <section className="section-pad"><div className="container helper-container">
-      <SectionHeading eyebrow="YOUR TROUBLESHOOTING CHAT" title="What are you stuck on?" description="Get instant local suggestions, optionally ask Gemini for a web-grounded explanation, or search coding resources yourself." />
+      <SectionHeading eyebrow="YOUR TROUBLESHOOTING CHAT" title="What are you stuck on?" description="Get instant suggestions from the local guide library, then search coding resources for more help." />
       <div className="assistant-panel">
-        <div className="assistant-status"><span aria-hidden="true">✦</span><div><strong>CodeStart helper</strong><small>Local guides · optional Gemini web search</small></div></div>
+        <div className="assistant-status"><span aria-hidden="true">✦</span><div><strong>CodeStart helper</strong><small>Local guide assistant · ready</small></div></div>
         <div className="assistant-thread" aria-live="polite">
           {messages.length === 0 && <div className="assistant-welcome">
             <p>Hi! Paste the full error message or a short code snippet, and I’ll suggest a likely fix from the guide library.</p>
@@ -137,8 +111,7 @@ export default function CodeHelper() {
           </div>}
           {messages.map(message => <article className="chat-turn" key={message.id}>
             <div className="chat-bubble user-bubble"><span>You</span><p>{message.question}</p></div>
-            <div className="chat-bubble bot-bubble"><span>{message.isLoading ? "Gemini is searching the web…" : message.usedAi ? "CodeStart AI helper" : "CodeStart guide helper"}</span><p>{message.isLoading ? "Checking current references and preparing an explanation…" : message.answer}</p>
-              {message.aiError && <p className="helper-validation" role="status">{message.aiError} Your local suggestions are still available below.</p>}
+            <div className="chat-bubble bot-bubble"><span>CodeStart guide helper</span><p>{message.answer}</p>
               {message.suggestions.length > 0 && <div className="chat-matches">
                 <strong>Related guide{message.suggestions.length > 1 ? "s" : ""}</strong>
                 {message.suggestions.map(topic => <details className="chat-match" key={topic.id}>
@@ -148,7 +121,6 @@ export default function CodeHelper() {
                   <Link to="/errors">Browse all error types →</Link>
                 </details>)}
               </div>}
-              {message.sources.length > 0 && <div className="ai-sources"><strong>Web sources</strong>{message.sources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noopener noreferrer">{source.title || source.url}<span aria-hidden="true"> ↗</span></a>)}</div>}
               <div className="web-search-block">
                 <strong>Search the web for this issue</strong>
                 <p>Choose a source to open results in a new tab. Your submitted text will be sent to that search provider.</p>
@@ -171,11 +143,11 @@ export default function CodeHelper() {
           <textarea id="code-question" value={input} onChange={event => { setInput(event.target.value); setValidationMessage(""); }} placeholder={"For example:\nTypeError: Cannot read properties of undefined\n\nPaste only the relevant code and error. Do not include passwords or API keys."} rows="6" />
           {liveSuggestions.length > 0 && <div className="live-matches"><span>Possible matches as you type</span>{liveSuggestions.map(topic => <button key={topic.id} type="button" onClick={() => ask(topic.title)}>{topic.title}</button>)}</div>}
           {validationMessage && <p className="helper-validation" role="alert">{validationMessage}</p>}
-          <label className="ai-consent"><input type="checkbox" checked={aiEnabled} onChange={event => setAiEnabled(event.target.checked)} /><span><strong>Enable Gemini AI search</strong><small>When checked, the text you submit is sent to Google Gemini for an explanation and web-grounded sources. Do not include passwords, API keys, or private code.</small></span></label>
-          <div className="helper-form-footer"><span>{aiEnabled ? "Submitting sends your text to Google Gemini." : "Local matching only; your text stays in this browser."}</span><button type="submit" className="btn-primary-custom">Ask the helper <span>→</span></button></div>
+          <div className="helper-form-footer"><span>Your text stays in this browser unless you open an external search link.</span><button type="submit" className="btn-primary-custom">Ask the helper <span>→</span></button></div>
         </form>
-        <p className="helper-disclaimer">Local matching works without AI. Gemini AI search requires a server-side GEMINI_API_KEY configured in Vercel; external search links open only when clicked. Never send secrets or private code to third-party sites.</p>
+        <p className="helper-disclaimer">This helper matches your question against the local guide library; it does not use generative AI. External searches open only when clicked, and send your query to the selected provider.</p>
       </div>
     </div></section>
   </div>;
 }
+

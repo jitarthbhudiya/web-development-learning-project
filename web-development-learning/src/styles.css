@@ -12,3 +12,4 @@
 @media(max-width:991px){.course-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.course-detail-columns{gap:20px}}
 @media(max-width:767px){.course-progress-bar{align-items:stretch;flex-direction:column}.course-progress-actions{min-width:0}.course-filters{grid-template-columns:1fr}.course-filter-label{margin-bottom:-7px}.course-grid{grid-template-columns:1fr}.course-card{min-height:250px}.course-detail{padding:20px}.course-detail-columns{grid-template-columns:1fr;gap:8px}.webdev-learning-callout{align-items:flex-start;flex-direction:column;padding:22px}.webdev-learning-callout h2{font-size:18px}}
 
+

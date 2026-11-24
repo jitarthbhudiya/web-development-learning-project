@@ -62,7 +62,7 @@ export const learningTopics = [
     code: "const button = document.querySelector(\"#save\");\nbutton?.addEventListener(\"click\", () => {\n  console.log(\"Saved\");\n});",
     links: [
       { label: "JavaScript reference", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference" },
-     
+    ]
   },
   {
     id: "react",
