@@ -13,3 +13,33 @@
 @media(max-width:767px){.course-progress-bar{align-items:stretch;flex-direction:column}.course-progress-actions{min-width:0}.course-filters{grid-template-columns:1fr}.course-filter-label{margin-bottom:-7px}.course-grid{grid-template-columns:1fr}.course-card{min-height:250px}.course-detail{padding:20px}.course-detail-columns{grid-template-columns:1fr;gap:8px}.webdev-learning-callout{align-items:flex-start;flex-direction:column;padding:22px}.webdev-learning-callout h2{font-size:18px}}
 
 
+
+.quiz-card {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.08);
+}
+
+.quiz-card button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  background: white;
+}
+
+.quiz-card button.selected {
+  background: #dbeafe;
+  border-color: #2563eb;
+}
+
+.quiz-card button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
