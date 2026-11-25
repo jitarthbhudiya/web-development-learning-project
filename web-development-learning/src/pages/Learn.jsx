@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import CodeExample from "../components/CodeExample.jsx";
 import SectionHeading from "../components/SectionHeading.jsx";
 import { learningTopics } from "../data/learning.js";
-import QuickQuiz from "./components/QuickQuiz";
+import QuickQuiz from "../components/QuickQuiz.jsx";
 const progressStorageKey = "codestart-learning-progress";
 const tracks = ["All topics", ...new Set(learningTopics.map(topic => topic.track))];
 
@@ -132,11 +132,13 @@ export default function Learn() {
         </div>
       </article>}
 
-      
+      <section className="quick-quiz-wrap" aria-label="Web development knowledge check">
+        <div className="quick-quiz-heading">
+          <div className="eyebrow">KNOWLEDGE CHECK</div>
+          <p>Review a few core ideas from HTML, CSS, and JavaScript.</p>
+        </div>
+        <QuickQuiz />
+      </section>
     </div></section>
   </div>;
-  
-
-// Inside your page:
-<QuickQuiz />
 }

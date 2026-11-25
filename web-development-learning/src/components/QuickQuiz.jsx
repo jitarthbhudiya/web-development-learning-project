@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-<link rel="stylesheet" href="style.css" />
 
 const questions = [
   {
@@ -28,21 +27,23 @@ export default function QuickQuiz() {
   const [selected, setSelected] = useState("");
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [answered, setAnswered] = useState(false);
 
   const q = questions[current];
 
   function submitAnswer() {
-    if (!selected) return;
+    if (!selected || answered) return;
+    if (selected === q.answer) setScore(value => value + 1);
+    setAnswered(true);
+  }
 
-    if (selected === q.answer) {
-      setScore(score + 1);
-    }
-
+  function nextQuestion() {
     if (current === questions.length - 1) {
       setFinished(true);
     } else {
       setCurrent(current + 1);
       setSelected("");
+      setAnswered(false);
     }
   }
 
@@ -56,11 +57,12 @@ export default function QuickQuiz() {
           <p>
             Your score: {score}/{questions.length}
           </p>
-          <button onClick={() => {
+          <button type="button" onClick={() => {
             setCurrent(0);
             setSelected("");
             setScore(0);
             setFinished(false);
+            setAnswered(false);
           }}>
             Try Again
           </button>
@@ -79,20 +81,21 @@ export default function QuickQuiz() {
               className={
                 selected === option ? "selected" : ""
               }
+              type="button"
+              aria-pressed={selected === option}
+              disabled={answered}
               onClick={() => setSelected(option)}
             >
               {option}
             </button>
           ))}
 
-          <button
-            onClick={submitAnswer}
-            disabled={!selected}
-          >
-            {current === questions.length - 1
-              ? "Finish Quiz"
-              : "Next Question"}
-          </button>
+          {answered && <p className={`quiz-feedback ${selected === q.answer ? "correct" : "incorrect"}`} role="status">
+            {selected === q.answer ? "Correct!" : `Not quite. The answer is ${q.answer}.`} {q.explanation}
+          </p>}
+          {answered
+            ? <button type="button" onClick={nextQuestion}>{current === questions.length - 1 ? "See your score" : "Next question"}</button>
+            : <button type="button" onClick={submitAnswer} disabled={!selected}>Check answer</button>}
         </>
       )}
     </div>

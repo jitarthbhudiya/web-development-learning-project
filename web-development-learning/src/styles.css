@@ -43,3 +43,5 @@
   opacity: .5;
   cursor: not-allowed;
 }
+
+.quick-quiz-wrap{margin-top:42px;padding-top:28px;border-top:1px solid var(--line)}.quick-quiz-heading{text-align:center}.quick-quiz-heading p{margin:8px 0 0;color:var(--muted);font-size:12px}.quiz-feedback{padding:12px;border-radius:8px;font-size:12px;line-height:1.6}.quiz-feedback.correct{background:#e8f7ef;color:#23734e}.quiz-feedback.incorrect{background:#fff1f0;color:#9b3f3f}
