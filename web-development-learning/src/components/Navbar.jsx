@@ -8,6 +8,7 @@ const links = [
   ["/fix-guides", "How to Fix Errors"],
   ["/learn", "Learn & Explore"],
   ["/code-helper", "Code Helper"],
+  ["/ai-helper", "AI Helper"],
   ["/contact", "Contact"],
 ];
 

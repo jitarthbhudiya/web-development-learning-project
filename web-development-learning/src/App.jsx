@@ -8,6 +8,7 @@ import FixGuides from "./pages/FixGuides.jsx";
 import Contact from "./pages/Contact.jsx";
 import Learn from "./pages/Learn.jsx";
 import CodeHelper from "./pages/CodeHelper.jsx";
+import AIHelper from "./pages/AIHelper.jsx";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/fix-guides" element={<FixGuides />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/code-helper" element={<CodeHelper />} />
+          <Route path="/ai-helper" element={<AIHelper />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
