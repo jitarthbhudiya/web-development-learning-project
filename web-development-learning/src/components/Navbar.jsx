@@ -9,6 +9,7 @@ const links = [
   ["/learn", "Learn & Explore"],
   ["/code-helper", "Code Helper"],
   ["/ai-helper", "AI Helper"],
+  ["/playground", "Playground"],
   ["/contact", "Contact"],
 ];
 

@@ -24,7 +24,7 @@ npm.cmd run preview
 
 ## Project structure
 - `src/components` reusable navigation, footer, cards and code examples
-- `src/pages` Home, About, Errors, Fix Guides, Learn, Code Helper and Contact pages
+- `src/pages` Home, About, Errors, Fix Guides, Learn, Code Helper, AI Helper, Live Code Playground and Contact pages
 - `src/data` learning notes and troubleshooting guide content
 - `src/styles.css` responsive styling
 
